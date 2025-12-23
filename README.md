@@ -22,7 +22,7 @@
     npm run dev
     ```
 
-3.  打开浏览器访问显示的地址 (通常是 http://localhost:5173)。
+3.  打开浏览器访问显示的地址 (https://chenxuegeng.github.io/Early-Education-Robot-Website/)。
 
 ## 模拟测试
 

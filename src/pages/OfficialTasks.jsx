@@ -30,7 +30,7 @@ const OfficialTasks = () => {
     <div className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
         <Trophy className="text-yellow-500" size={28} />
-        官方任务 / 周挑战
+        官方任务 / 周挑战（测试修改 by Copilot）
       </h1>
       <div className="space-y-6">
         {officialTasks.map(task => (
