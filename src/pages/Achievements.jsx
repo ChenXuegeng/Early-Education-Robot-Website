@@ -1,0 +1,53 @@
+import React from 'react';
+import { Award, Star, User } from 'lucide-react';
+import { useApp } from '../context/AppContext';
+
+const mockRankings = [
+  { id: 'u1', name: '乐乐小朋友', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix', points: 120, achievements: ['本周挑战达人'] },
+  { id: 'u2', name: '小明', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka', points: 90, achievements: ['清扫路线专家'] },
+  { id: 'u3', name: '花花', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jude', points: 80, achievements: ['家庭协作之星'] },
+];
+
+const Achievements = () => {
+  const { currentUser } = useApp();
+  return (
+    <div className="max-w-3xl mx-auto">
+      <h1 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
+        <Star className="text-yellow-500" size={28} />
+        积分 / 成就 / 排行榜
+      </h1>
+      {/* 我的积分与成就 */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+        <div className="flex items-center mb-2">
+          <User className="text-primary mr-2" size={20} />
+          <span className="font-semibold text-gray-900">{currentUser.name}</span>
+        </div>
+        <div className="flex items-center gap-4 mb-2">
+          <Award className="text-yellow-500" size={20} />
+          <span className="text-lg font-bold text-primary">{currentUser.points} 积分</span>
+        </div>
+        <div className="text-sm text-gray-600">成就示例：积极参与、挑战达人、清扫路线专家等</div>
+      </div>
+      {/* 排行榜 */}
+      <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+          <Award className="text-yellow-500" size={20} />
+          排行榜
+        </h2>
+        <ol className="space-y-4">
+          {mockRankings.map((user, idx) => (
+            <li key={user.id} className="flex items-center gap-4">
+              <span className={`text-xl font-bold w-6 text-center ${idx === 0 ? 'text-yellow-500' : idx === 1 ? 'text-gray-500' : 'text-yellow-900'}`}>{idx + 1}</span>
+              <img src={user.avatar} alt={user.name} className="w-10 h-10 rounded-full bg-gray-200" />
+              <span className="font-semibold text-gray-900">{user.name}</span>
+              <span className="ml-auto text-primary font-bold">{user.points} 积分</span>
+              <span className="ml-4 text-xs text-gray-500">{user.achievements.join('，')}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  );
+};
+
+export default Achievements;

@@ -11,6 +11,8 @@ const Navbar = () => {
 
   const navItems = [
     { path: '/', label: '社区首页', icon: Home },
+    { path: '/tasks', label: '官方任务/周挑战', icon: Award },
+    { path: '/achievements', label: '积分/成就/排行榜', icon: Award },
     { path: '/create-post', label: '发布帖子', icon: PlusCircle },
     { path: '/points', label: '积分中心', icon: Award },
     { path: '/profile', label: '我的', icon: User },
