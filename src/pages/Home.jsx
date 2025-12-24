@@ -9,13 +9,7 @@ const Home = () => {
     <div className="max-w-2xl mx-auto">
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold text-gray-800">社区动态</h1>
-        <button 
-          onClick={simulateLikeOnMyPost}
-          className="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-gray-600"
-          title="点击模拟别人给你的帖子点赞，增加你的积分"
-        >
-        
-        </button>
+        {/* 删除了“模拟别人点赞”按钮 */}
       </div>
 
       <div className="space-y-6">
