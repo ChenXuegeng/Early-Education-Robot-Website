@@ -14,7 +14,7 @@ const Home = () => {
           className="text-xs bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded text-gray-600"
           title="点击模拟别人给你的帖子点赞，增加你的积分"
         >
-          (测试) 模拟别人给我点赞
+        
         </button>
       </div>
 
