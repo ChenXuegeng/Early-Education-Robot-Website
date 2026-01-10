@@ -3,7 +3,7 @@ import { Heart, MessageSquarePlus, Upload, PlayCircle } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 
 const TaskCommentSection = ({ taskId }) => {
-  const { currentUser, taskComments, addTaskComment, likeTaskComment, simulateLikeOnMyTaskComment } = useApp();
+  const { currentUser, taskComments, addTaskComment, likeTaskComment } = useApp();
   const [text, setText] = useState('');
   const [videoUrl, setVideoUrl] = useState(null);
   const videoInputRef = useRef(null);
@@ -87,14 +87,6 @@ const TaskCommentSection = ({ taskId }) => {
                   <Heart size={18} fill={isLiked ? 'currentColor' : 'none'} />
                   <span>{c.likes}</span>
                 </button>
-                {c.authorId === currentUser.id && (
-                  <button
-                    onClick={() => simulateLikeOnMyTaskComment(c.id)}
-                    className="text-xs px-2 py-1 rounded bg-yellow-100 text-yellow-700"
-                  >
-                    模拟别人点赞我 +10积分
-                  </button>
-                )}
               </div>
             </div>
           );
