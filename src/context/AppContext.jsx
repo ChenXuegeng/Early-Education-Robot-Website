@@ -28,7 +28,7 @@ export const AppProvider = ({ children }) => {
       authorName: '小明',
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
       content: '今天我的机器人学会了扫地！太棒了！',
-      image: null,
+      media: null,
       likes: 5,
       likedBy: [],
       timestamp: '2小时前'
@@ -39,7 +39,7 @@ export const AppProvider = ({ children }) => {
       authorName: '乐乐小朋友',
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
       content: '分享我设计的“迷宫清扫”路线，大家快来挑战！',
-      image: 'https://placehold.co/600x400/orange/white?text=Maze+Map',
+      media: { type: 'image', url: 'https://placehold.co/600x400/orange/white?text=Maze+Map' },
       likes: 12,
       likedBy: ['u2', 'u3'],
       timestamp: '5小时前'
@@ -49,14 +49,14 @@ export const AppProvider = ({ children }) => {
   // Task-specific video comments (for challenges)
   const [taskComments, setTaskComments] = useState([]);
 
-  const addPost = (content, image) => {
+  const addPost = (content, media) => {
     const newPost = {
       id: Date.now().toString(),
       authorId: currentUser.id,
       authorName: currentUser.name,
       authorAvatar: currentUser.avatar,
       content,
-      image,
+      media: media || null,
       likes: 0,
       likedBy: [],
       timestamp: '刚刚'

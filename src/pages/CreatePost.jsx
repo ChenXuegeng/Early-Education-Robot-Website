@@ -6,6 +6,8 @@ import { useApp } from '../context/AppContext';
 const CreatePost = () => {
   const [content, setContent] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [file, setFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState('');
   const { addPost } = useApp();
   const navigate = useNavigate();
 
@@ -13,8 +15,14 @@ const CreatePost = () => {
     e.preventDefault();
     if (!content.trim()) return;
     
-    // 提交帖子（此处图片先传 null）
-    addPost(content, null);
+    // 构造媒体对象（图片或视频），使用本地预览 URL 展示
+    let media = null;
+    if (file) {
+      const url = previewUrl || URL.createObjectURL(file);
+      const type = file.type.startsWith('video') ? 'video' : 'image';
+      media = { type, url };
+    }
+    addPost(content, media);
     setSubmitted(true);
   };
 
@@ -39,6 +47,34 @@ const CreatePost = () => {
             ></textarea>
           </div>
           
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">上传图片或视频（可选）</label>
+            <input
+              type="file"
+              accept="image/*,video/*"
+              onChange={(e) => {
+                const f = e.target.files?.[0] || null;
+                setFile(f);
+                if (f) {
+                  const url = URL.createObjectURL(f);
+                  setPreviewUrl(url);
+                } else {
+                  setPreviewUrl('');
+                }
+              }}
+              className="block w-full text-sm text-gray-700"
+            />
+            {previewUrl && (
+              <div className="mt-3">
+                {file && file.type.startsWith('video') ? (
+                  <video src={previewUrl} controls className="rounded max-h-80 w-full" />
+                ) : (
+                  <img src={previewUrl} alt="预览" className="rounded max-h-80" />
+                )}
+              </div>
+            )}
+          </div>
+
           <div className="flex items-center justify-between">
             <button
               type="button"

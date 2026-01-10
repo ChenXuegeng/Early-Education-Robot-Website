@@ -7,7 +7,7 @@ const Community = () => {
   const { posts, likePost, currentUser } = useApp();
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h2 className="text-2xl font-bold mb-6">社区互动</h2>
+      <h2 className="text-2xl font-bold mb-6">社区首页</h2>
       {posts.length === 0 && <div className="text-gray-500">还没有作品，快来发布吧！</div>}
       <div className="space-y-8">
         {posts.map(post => (
@@ -20,9 +20,13 @@ const Community = () => {
               </div>
             </div>
             <div className="mb-2 text-gray-800 whitespace-pre-line">{post.content}</div>
-            {post.image && (
+            {post.media && (
               <div className="mb-2">
-                <img src={post.image} alt="作品" className="rounded max-h-80" />
+                {post.media.type === 'video' ? (
+                  <video src={post.media.url} controls className="rounded max-h-96 w-full" />
+                ) : (
+                  <img src={post.media.url} alt="作品" className="rounded max-h-80 w-full" />
+                )}
               </div>
             )}
             <button

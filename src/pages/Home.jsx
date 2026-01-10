@@ -36,9 +36,13 @@ const Home = () => {
               </div>
 
               {/* Post Image */}
-              {post.image && (
+              {post.media && (
                 <div className="mt-2">
-                  <img src={post.image} alt="Post content" className="w-full h-auto object-cover max-h-96" />
+                  {post.media.type === 'video' ? (
+                    <video src={post.media.url} controls className="w-full h-auto max-h-96" />
+                  ) : (
+                    <img src={post.media.url} alt="Post content" className="w-full h-auto object-cover max-h-96" />
+                  )}
                 </div>
               )}
 
