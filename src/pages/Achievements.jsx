@@ -12,10 +12,16 @@ const Achievements = () => {
       // 给特定用户设置固定分数和成就
       if (user.id === 'u2') return { ...user, points: 90, achievements: ['清扫路线专家'] };
       if (user.id === 'u3') return { ...user, points: 80, achievements: ['家庭协作之星'] };
+      if (user.id === 'u4') return { ...user, points: 75, achievements: ['编程新星'] };
+      if (user.id === 'u5') return { ...user, points: 68, achievements: ['积极参与者'] };
+      if (user.id === 'u6') return { ...user, points: 62, achievements: ['任务完成者'] };
+      if (user.id === 'u7') return { ...user, points: 55, achievements: ['新手上路'] };
+      if (user.id === 'u8') return { ...user, points: 48, achievements: ['新手上路'] };
+      if (user.id === 'u9') return { ...user, points: 42, achievements: ['新手上路'] };
       // 其他用户随机分配分数
       return { 
         ...user, 
-        points: Math.floor(Math.random() * 70) + 10,
+        points: Math.floor(Math.random() * 40) + 10,
         achievements: ['新手上路'] 
       };
     })
