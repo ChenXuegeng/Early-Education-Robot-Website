@@ -19,6 +19,13 @@ export const AppProvider = ({ children }) => {
   const [users] = useState([
     { id: 'u2', name: '小明', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka' },
     { id: 'u3', name: '花花', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jude' },
+    { id: 'u4', name: '阿豪', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Ahao' },
+    { id: 'u5', name: '小宝', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Xiaobao' },
+    { id: 'u6', name: '泽神', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Zesheng' },
+    { id: 'u7', name: '噜噜', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Lulu' },
+    {id: 'u8', name: '钉钉', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=LeleMom' },
+    {id: 'u9', name: '阿柳', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aliu' },
+
   ]);
 
   const [posts, setPosts] = useState([
