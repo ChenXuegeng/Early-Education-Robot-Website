@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trophy } from 'lucide-react';
-import TaskCommentSection from '../components/TaskCommentSection.jsx';
+import { useNavigate } from 'react-router-dom';
 
 // Three challenges as requested
 const officialTasks = [
@@ -25,6 +25,7 @@ const officialTasks = [
 ];
 
 const OfficialTasks = () => {
+  const navigate = useNavigate();
   return (
     <div className="max-w-3xl mx-auto">
       <h1 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
@@ -33,15 +34,16 @@ const OfficialTasks = () => {
       </h1>
       <div className="space-y-6">
         {officialTasks.map(task => (
-          <div key={task.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <div className="mb-2">
+          <div key={task.id} className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 flex items-center justify-between">
+            <div>
               <h2 className="text-lg font-semibold text-gray-900">{task.title}</h2>
             </div>
-            <p className="text-gray-700 mb-2">{task.description}</p>
-            <span className="inline-block bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-medium">{task.reward}</span>
-
-            {/* Comment section with video upload and likes */}
-            <TaskCommentSection taskId={task.id} />
+            <button
+              className="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary-dark"
+              onClick={() => navigate(`/task-detail?id=${task.id}`)}
+            >
+              挑战
+            </button>
           </div>
         ))}
       </div>
