@@ -39,8 +39,10 @@ export const AppProvider = ({ children }) => {
       authorId: 'u1',
       authorName: '乐乐小朋友',
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
-      content: '分享我设计的“迷宫清扫”路线，大家快来挑战！',
-      media: { type: 'image', url: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&h=400&fit=crop' },      taskId: null,      likes: 12,
+      content: '分享我设计的"迷宫清扫"路线，大家快来挑战！🤖✨\n\n这是一个适合初学者的路线规划，机器人会按照优化的路径清扫整个迷宫区域。',
+      media: null,
+      taskId: null,
+      likes: 12,
       likedBy: ['u2', 'u3'],
       timestamp: '5小时前'
     }
