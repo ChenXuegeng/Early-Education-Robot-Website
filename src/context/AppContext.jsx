@@ -40,7 +40,7 @@ export const AppProvider = ({ children }) => {
       authorName: '乐乐小朋友',
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
       content: '分享我设计的“迷宫清扫”路线，大家快来挑战！',
-      media: { type: 'image', url: 'https://placehold.co/600x400/orange/white?text=Maze+Map' },      taskId: null,      likes: 12,
+      media: { type: 'image', url: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=600&h=400&fit=crop' },      taskId: null,      likes: 12,
       likedBy: ['u2', 'u3'],
       timestamp: '5小时前'
     }
