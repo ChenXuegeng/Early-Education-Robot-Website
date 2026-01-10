@@ -46,6 +46,9 @@ export const AppProvider = ({ children }) => {
     }
   ]);
 
+  // Task-specific video comments (for challenges)
+  const [taskComments, setTaskComments] = useState([]);
+
   const addPost = (content, image) => {
     const newPost = {
       id: Date.now().toString(),
@@ -124,8 +127,60 @@ export const AppProvider = ({ children }) => {
     }
   };
 
+  // Add a new task comment with optional video url
+  const addTaskComment = (taskId, content, videoUrl) => {
+    const newComment = {
+      id: `c_${Date.now()}`,
+      taskId,
+      authorId: currentUser.id,
+      authorName: currentUser.name,
+      authorAvatar: currentUser.avatar,
+      content,
+      video: videoUrl || null,
+      likes: 0,
+      likedBy: [],
+      timestamp: '刚刚'
+    };
+    setTaskComments(prev => [newComment, ...prev]);
+  };
+
+  // Current user likes a comment (author gets points only if it's not current user and we tracked their points)
+  const likeTaskComment = (commentId) => {
+    setTaskComments(prev => prev.map(c => {
+      if (c.id !== commentId) return c;
+      if (c.likedBy.includes(currentUser.id)) return c;
+      const updated = { ...c, likes: c.likes + 1, likedBy: [...c.likedBy, currentUser.id] };
+      // If the comment author is current user, we won't add points here; use simulate function to emulate others' likes
+      return updated;
+    }));
+  };
+
+  // Simulate someone else liked my comment: increase likes and award points
+  const simulateLikeOnMyTaskComment = (commentId) => {
+    setTaskComments(prev => prev.map(c => {
+      if (c.id !== commentId || c.authorId !== currentUser.id) return c;
+      return { ...c, likes: c.likes + 1 };
+    }));
+    setCurrentUser(prev => ({
+      ...prev,
+      points: prev.points + 10,
+      officialPoints: prev.officialPoints + 10
+    }));
+  };
+
   return (
-    <AppContext.Provider value={{ currentUser, users, posts, addPost, likePost, simulateLikeOnMyPost }}>
+    <AppContext.Provider value={{
+      currentUser,
+      users,
+      posts,
+      addPost,
+      likePost,
+      simulateLikeOnMyPost,
+      taskComments,
+      addTaskComment,
+      likeTaskComment,
+      simulateLikeOnMyTaskComment
+    }}>
       {children}
     </AppContext.Provider>
   );
