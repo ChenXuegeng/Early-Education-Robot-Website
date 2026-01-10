@@ -8,13 +8,17 @@ const Achievements = () => {
   // 合并当前用户和其他用户，生成排行榜
   const allUsers = [
     { ...currentUser, achievements: ['本周挑战达人'] },
-    { id: 'u2', name: '小明', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka', points: 90, achievements: ['清扫路线专家'] },
-    { id: 'u3', name: '花花', avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jude', points: 80, achievements: ['家庭协作之星'] },
-    ...users.slice(3).map(user => ({ 
-      ...user, 
-      points: Math.floor(Math.random() * 70) + 10, // 随机分配10-80分
-      achievements: ['新手上路'] 
-    }))
+    ...users.map(user => {
+      // 给特定用户设置固定分数和成就
+      if (user.id === 'u2') return { ...user, points: 90, achievements: ['清扫路线专家'] };
+      if (user.id === 'u3') return { ...user, points: 80, achievements: ['家庭协作之星'] };
+      // 其他用户随机分配分数
+      return { 
+        ...user, 
+        points: Math.floor(Math.random() * 70) + 10,
+        achievements: ['新手上路'] 
+      };
+    })
   ];
   
   // 按积分降序排序
