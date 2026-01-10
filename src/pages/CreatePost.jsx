@@ -5,6 +5,7 @@ import { useApp } from '../context/AppContext';
 
 const CreatePost = () => {
   const [content, setContent] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const { addPost } = useApp();
   const navigate = useNavigate();
 
@@ -12,9 +13,9 @@ const CreatePost = () => {
     e.preventDefault();
     if (!content.trim()) return;
     
-    // Simulate image upload or just pass null for now
+    // 提交帖子（此处图片先传 null）
     addPost(content, null);
-    navigate('/');
+    setSubmitted(true);
   };
 
   return (
@@ -22,6 +23,7 @@ const CreatePost = () => {
       <h1 className="text-2xl font-bold text-gray-800 mb-6">发布新帖子</h1>
       
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+        {!submitted ? (
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="content" className="block text-sm font-medium text-gray-700 mb-2">
@@ -36,7 +38,7 @@ const CreatePost = () => {
               onChange={(e) => setContent(e.target.value)}
             ></textarea>
           </div>
-
+          
           <div className="flex items-center justify-between">
             <button
               type="button"
@@ -60,6 +62,18 @@ const CreatePost = () => {
             </button>
           </div>
         </form>
+        ) : (
+          <div className="text-center space-y-4">
+            <div className="text-lg font-semibold text-green-600">发布成功！</div>
+            <p className="text-gray-600">你的帖子已发布，前往社区首页查看并参与互动。</p>
+            <button
+              onClick={() => navigate('/')}
+              className="px-6 py-2 rounded-lg bg-primary text-white hover:bg-indigo-700"
+            >
+              返回社区首页
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
