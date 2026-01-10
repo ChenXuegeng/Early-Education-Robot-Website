@@ -22,6 +22,7 @@
     ```bash
     npm run dev
     ```
+    11
 
 3.  打开浏览器访问显示的地址 (https://chenxuegeng.github.io/Early-Education-Robot-Website/)。
 
