@@ -15,12 +15,11 @@ const CreatePost = () => {
     e.preventDefault();
     if (!content.trim()) return;
     
-    // 构造媒体对象（图片或视频），使用本地预览 URL 展示
+    // 构造媒体对象（图片或视频），使用 DataURL 持久化
     let media = null;
-    if (file) {
-      const url = previewUrl || URL.createObjectURL(file);
+    if (file && previewUrl) {
       const type = file.type.startsWith('video') ? 'video' : 'image';
-      media = { type, url };
+      media = { type, url: previewUrl };
     }
     addPost(content, media);
     setSubmitted(true);
@@ -56,8 +55,12 @@ const CreatePost = () => {
                 const f = e.target.files?.[0] || null;
                 setFile(f);
                 if (f) {
-                  const url = URL.createObjectURL(f);
-                  setPreviewUrl(url);
+                  // 使用 FileReader 读取为 DataURL，确保 URL 持久化
+                  const reader = new FileReader();
+                  reader.onload = (event) => {
+                    setPreviewUrl(event.target.result);
+                  };
+                  reader.readAsDataURL(f);
                 } else {
                   setPreviewUrl('');
                 }
