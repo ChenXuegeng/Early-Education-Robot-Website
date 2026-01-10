@@ -29,6 +29,7 @@ export const AppProvider = ({ children }) => {
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
       content: '今天我的机器人学会了扫地！太棒了！',
       media: null,
+      taskId: null,
       likes: 5,
       likedBy: [],
       timestamp: '2小时前'
@@ -39,17 +40,53 @@ export const AppProvider = ({ children }) => {
       authorName: '乐乐小朋友',
       authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Felix',
       content: '分享我设计的“迷宫清扫”路线，大家快来挑战！',
-      media: { type: 'image', url: 'https://placehold.co/600x400/orange/white?text=Maze+Map' },
-      likes: 12,
+      media: { type: 'image', url: 'https://placehold.co/600x400/orange/white?text=Maze+Map' },      taskId: null,      likes: 12,
       likedBy: ['u2', 'u3'],
       timestamp: '5小时前'
     }
   ]);
 
   // Task-specific video comments (for challenges)
-  const [taskComments, setTaskComments] = useState([]);
+  const [taskComments, setTaskComments] = useState([
+    {
+      id: 'c1',
+      taskId: 't1',
+      authorId: 'u2',
+      authorName: '小明',
+      authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
+      content: '我用了A*算法，效果很不错！',
+      video: null,
+      likes: 3,
+      likedBy: [],
+      timestamp: '1小时前'
+    },
+    {
+      id: 'c2',
+      taskId: 't2',
+      authorId: 'u3',
+      authorName: '花花',
+      authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Jude',
+      content: '我设计的搬运流程用了状态机，很稳定！',
+      video: null,
+      likes: 2,
+      likedBy: [],
+      timestamp: '30分钟前'
+    },
+    {
+      id: 'c3',
+      taskId: 't3',
+      authorId: 'u2',
+      authorName: '小明',
+      authorAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Aneka',
+      content: '超声波传感器搭配PID控制真的很有效！',
+      video: null,
+      likes: 1,
+      likedBy: [],
+      timestamp: '15分钟前'
+    }
+  ]);
 
-  const addPost = (content, media) => {
+  const addPost = (content, media, taskId = null) => {
     const newPost = {
       id: Date.now().toString(),
       authorId: currentUser.id,
@@ -57,6 +94,7 @@ export const AppProvider = ({ children }) => {
       authorAvatar: currentUser.avatar,
       content,
       media: media || null,
+      taskId: taskId || null,
       likes: 0,
       likedBy: [],
       timestamp: '刚刚'
@@ -142,6 +180,12 @@ export const AppProvider = ({ children }) => {
       timestamp: '刚刚'
     };
     setTaskComments(prev => [newComment, ...prev]);
+    
+    // 同时添加到社区首页帖子
+    const taskTitles = { t1: '最优路径规划挑战', t2: '物流搬运编程任务', t3: '避障编程挑战' };
+    const postContent = `【${taskTitles[taskId] || '任务'}】${content}`;
+    const media = videoUrl ? { type: 'video', url: videoUrl } : null;
+    addPost(postContent, media, taskId);
   };
 
   // Current user likes a comment (author gets points only if it's not current user and we tracked their points)

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useApp } from "../context/AppContext";
 
 const TASKS = [
   {
@@ -30,17 +31,42 @@ function useQuery() {
 const TaskDetail = () => {
   const query = useQuery();
   const navigate = useNavigate();
+  const { addTaskComment } = useApp();
   const taskId = query.get('id');
   const task = TASKS.find(t => t.id === taskId);
   const [video, setVideo] = useState(null);
+  const [videoPreview, setVideoPreview] = useState('');
   const [desc, setDesc] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   if (!task) return <div className="p-6">未找到该任务</div>;
 
+  const handleVideoChange = (e) => {
+    const f = e.target.files?.[0] || null;
+    setVideo(f);
+    if (f) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setVideoPreview(event.target.result);
+      };
+      reader.readAsDataURL(f);
+    } else {
+      setVideoPreview('');
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    // 这里可扩展上传逻辑
-    navigate('/task-feedback');
+    if (!videoPreview || !desc.trim()) return;
+    
+    setSubmitting(true);
+    // 添加任务评论，同时会自动发布到社区首页
+    addTaskComment(taskId, desc, videoPreview);
+    
+    // 延迟跳转，给用户看到成功页面
+    setTimeout(() => {
+      navigate('/task-feedback');
+    }, 500);
   };
 
   return (
@@ -52,21 +78,31 @@ const TaskDetail = () => {
         <textarea
           className="w-full border rounded p-2 text-sm"
           rows={3}
-          placeholder="补充说明（可选）"
+          placeholder="补充说明（必填）"
           value={desc}
           onChange={e => setDesc(e.target.value)}
+          required
         />
-        <input
-          type="file"
-          accept="video/*"
-          onChange={e => setVideo(e.target.files?.[0] || null)}
-        />
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">选择视频文件（必填）</label>
+          <input
+            type="file"
+            accept="video/*"
+            onChange={handleVideoChange}
+            required
+          />
+          {videoPreview && (
+            <div className="mt-3">
+              <video src={videoPreview} controls className="rounded max-h-80 w-full" />
+            </div>
+          )}
+        </div>
         <button
           type="submit"
-          className="w-full py-2 bg-primary text-white rounded hover:bg-primary-dark"
-          disabled={!video}
+          disabled={!videoPreview || !desc.trim() || submitting}
+          className="w-full py-2 bg-primary text-white rounded hover:bg-primary-dark disabled:bg-gray-300"
         >
-          {video ? '上传并完成任务' : '请先选择视频'}
+          {submitting ? '上传中...' : '上传并完成任务'}
         </button>
       </form>
     </div>
