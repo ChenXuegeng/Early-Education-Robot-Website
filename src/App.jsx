@@ -9,10 +9,6 @@ import Profile from './pages/Profile';
 
 import OfficialTasks from './pages/OfficialTasks';
 import Achievements from './pages/Achievements';
-import TaskDetail from './pages/TaskDetail';
-import TaskFeedback from './pages/TaskFeedback';
-import VideoUpload from './pages/VideoUpload';
-import Community from './pages/Community';
 
 function App() {
   return (
@@ -21,16 +17,12 @@ function App() {
         <Navbar />
         <main className="flex-grow container mx-auto px-4 py-8">
           <Routes>
-            <Route path="/" element={<Community />} />
+            <Route path="/" element={<Home />} />
             <Route path="/create-post" element={<CreatePost />} />
             <Route path="/points" element={<PointsCenter />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/tasks" element={<OfficialTasks />} />
             <Route path="/achievements" element={<Achievements />} />
-            <Route path="/task-detail" element={<TaskDetail />} />
-            <Route path="/task-feedback" element={<TaskFeedback />} />
-            <Route path="/video-upload" element={<VideoUpload />} />
-            <Route path="/community" element={<Community />} />
           </Routes>
         </main>
       </div>
